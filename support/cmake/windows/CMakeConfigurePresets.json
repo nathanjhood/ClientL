@@ -47,23 +47,10 @@
     "inherits":[
       "windows-base"
     ],
-    "toolset": {
-      "value": "host=x64",
-      "strategy": "set"
-    },
-    "architecture": {
-      "value": "x64",
-      "strategy": "set"
-    },
     "environment": {
       "VCPKG_DEFAULT_TRIPLET": "x64-windows",
       "VCPKG_DEFAULT_HOST_TRIPLET": "x64-windows"
-    },
-    "vendor": {
-        "microsoft.com/VisualStudioSettings/CMake/1.0": {
-          "intelliSenseMode": "windows-msvc-x86"
-        }
-      }
+    }
     },
     {
       "name": "x86-windows",

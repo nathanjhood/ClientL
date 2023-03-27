@@ -69,9 +69,9 @@ option(GIT_SUBMODULE "Check submodules during build" ON)
 # Use local vcpkg if found
 option(USE_VCPKG "Use local vcpkg if found" ON)
 # Use NodeJS API library
-option(USE_NODEJS_API "Use NodeJS API library" true)
+option(USE_NODEJS_API "Use NodeJS API library" OFF)
 # Use NodeJS Addon API library
-option(USE_NODEJS_ADDON "Use NodeJS Addon API library" true)
+option(USE_NODEJS_ADDON "Use NodeJS Addon API library" OFF)
 # Use Catch2 testing library
 option(USE_TESTS "Use Catch2 testing library" OFF)
 # Build using shared libraries. if this is set to ON, then all libraries are built as shared libraries by default.
@@ -186,14 +186,9 @@ set(PROJECT_VENDOR ${CMAKE_PROJECT_VENDOR} CACHE STRING "Author/maintainer of th
 # specify the C standard
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED True)
-
-# specify the C++ standard
-if (CMAKE_VERSION VERSION_GREATER 3.12)
-  set(CMAKE_CXX_STANDARD 20)
-else()
-  set(CMAKE_CXX_STANDARD 17)
-endif()
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
+
 
 if(LOGGING)
   message(STATUS "...Detected project:\n")
@@ -231,16 +226,16 @@ set(CPACK_RESOURCE_FILE_LICENSE ${CMAKE_CURRENT_LIST_DIR}/LICENSE)
 set(CPACK_RESOURCE_FILE_README ${CMAKE_CURRENT_LIST_DIR}/README.md)
 set(CPACK_SOURCE_GENERATOR "TGZ;ZIP")
 set(CPACK_SOURCE_IGNORE_FILES
-    /.git/*
-    /.github
-    /.vs
-    /.vscode
-    /build
-    /downloads
-    /installed
-    /vcpkg
-    /.*build.*
-    /\\\\.DS_Store
+  /.git/*
+  /.github
+  /.vs
+  /.vscode
+  /build
+  /downloads
+  /installed
+  /vcpkg
+  /.*build.*
+  /\\\\.DS_Store
 )
 
 if(LOGGING)
@@ -483,9 +478,6 @@ message("\n")
 #
 # ============================================================================
 
-find_package(unofficial-node-addon-api CONFIG REQUIRED)
-target_link_libraries(main PRIVATE unofficial::node-addon-api::node-addon-api)
-
 
 if(USE_NODEJS_ADDON)
   message(STATUS "NodeJS Addon enabled.")
@@ -535,7 +527,7 @@ if(USE_NODEJS_ADDON)
 
   message(STATUS "Added target: NodeJSAddon.lib\n")
 
-else(USE_NODEJS_API)
+else(USE_NODEJS_ADDON)
   message(STATUS "NodeJSAddon disabled.\n")
 
 endif(USE_NODEJS_ADDON)
