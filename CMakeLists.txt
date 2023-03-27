@@ -63,7 +63,7 @@ set(CMAKE_PROJECT_VENDOR "StoneyDSP")
 # Get the list of ignored files from .gitignore
 set(GIT_IGNORE ${PROJECT_SOURCE_DIR}/.gitignore)
 # Use extern folder to resolve dependencies
-option(USE_EXTERN "Use extern folder to resolve dependencies" ON)
+option(USE_EXTERN "Use extern folder to resolve dependencies" OFF)
 # Check submodules during build
 option(GIT_SUBMODULE "Check submodules during build" ON)
 # Use local vcpkg if found
@@ -550,7 +550,7 @@ message("\n")
 message(STATUS "Adding target...")
 
 add_library(Main STATIC ${CM_VARS_CONFIG})
-#add_library(CMakeProject1::Main ALIAS Main)
+add_library(ClientL::Main ALIAS Main)
 
 # add_executable(Main ${CM_VARS_CONFIG})
 
@@ -597,6 +597,7 @@ message(STATUS "Added target: Main.exe\n")
 
 message("\n")
 
+# define NAPI_VERSION
 add_definitions(-DNAPI_VERSION=4)
 
 include_directories(${CMAKE_JS_INC})
@@ -621,6 +622,14 @@ if(MSVC AND CMAKE_JS_NODELIB_DEF AND CMAKE_JS_NODELIB_TARGET)
   execute_process(COMMAND ${CMAKE_AR} /def:${CMAKE_JS_NODELIB_DEF} /out:${CMAKE_JS_NODELIB_TARGET} ${CMAKE_STATIC_LINKER_FLAGS})
 endif()
 
+# Include Node-API wrappers
+execute_process(COMMAND node -p "require('node-addon-api').include"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+  OUTPUT_VARIABLE NODE_ADDON_API_DIR
+)
+string(REPLACE "\n" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+string(REPLACE "\"" "" NODE_ADDON_API_DIR ${NODE_ADDON_API_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${NODE_ADDON_API_DIR})
 
 # ============================================================================ #
 #
