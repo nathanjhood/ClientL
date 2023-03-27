@@ -436,6 +436,8 @@ if(USE_NODEJS_API)
       INTERFACE_NodeJSAPI_MAJOR_VERSION ${LOCAL_VERSION_MAJOR})
   set_property(TARGET NodeJSAPI APPEND PROPERTY COMPATIBLE_INTERFACE_STRING NodeJSAPI_MAJOR_VERSION)
 
+  add_compile_definitions(NAPI_VERSION=${napi_build_version})
+
   # find and link to fmt package via vcpkg
   find_package(unofficial-node-api CONFIG REQUIRED)
   target_link_libraries(NodeJSAPI
