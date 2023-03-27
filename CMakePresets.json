@@ -1,0 +1,214 @@
+{
+  "version": 6,
+  "cmakeMinimumRequired": {
+    "major": 3,
+    "minor": 26,
+    "patch": 1
+  },
+  "configurePresets": [
+    {
+      "name": "debug-settings",
+      "hidden": true,
+      "debug": {
+        "find": false,
+        "output": false,
+        "tryCompile": false
+      },
+      "errors": {
+        "deprecated": true,
+        "dev": true
+      },
+      "warnings": {
+        "deprecated": true,
+        "dev": true,
+        "systemVars": true,
+        "uninitialized": false,
+        "unusedCli": true
+      }
+    },
+		{
+			"name": "linux-base",
+			"hidden": true,
+			"description": "Target Linux with the GNUC toolset and Ninja Multi-Config generator.",
+			"generator": "Ninja Multi-Config",
+			"inherits": [ "debug-settings" ],
+			"binaryDir": "${sourceDir}/build/${presetName}",
+			"installDir": "${sourceDir}/installed/${presetName}",
+			"environment": {
+        "CMAKE_CONFIGURATION_TYPES": "Debug;Release;RelWithDebInfo;MinSizeRel",
+        "VCPKG_DOWNLOADS": "${sourceDir}/downloads",
+        "VCPKG_CRT_LINKAGE": "dynamic",
+        "VCPKG_LIBRARY_LINKAGE": "dynamic",
+        "CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      },
+			"condition": {
+				"type": "equals",
+				"lhs": "${hostSystemName}",
+				"rhs": "Linux"
+			}
+		},
+		{
+      "name": "x64-linux",
+      "displayName": "g++64",
+      "description": "Target Linux (64-bit) with the GNUC toolset and Ninja Multi-Config generator.",
+      "inherits":[ "linux-base" ],
+      "toolset": {
+          "value": "host=x64,",
+          "strategy": "external"
+      },
+      "architecture": {
+          "value": "x64",
+          "strategy": "external"
+      },
+      "cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "x86-linux",
+      "displayName": "g++86",
+      "description": "Target Linux (32-bit) with the GNUC toolset and Ninja Multi-Config generator.",
+      "inherits":[ "linux-base" ],
+      "toolset": {
+          "value": "host=x86,",
+          "strategy": "external"
+      },
+      "architecture": {
+          "value": "x86",
+          "strategy": "external"
+      },
+      "cacheVariables": {
+				"CMAKE_C_COMPILER": "gcc",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    }
+  ],
+  "buildPresets": [
+    {
+      "name": "x64-linux-dbg",
+      "displayName": "Debug",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Debug)",
+      "configurePreset": "x64-linux",
+      "configuration": "Debug",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "debug"
+      }
+    },
+    {
+      "name": "x64-linux-rel",
+      "displayName": "Release",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment. (Release)",
+      "configurePreset": "x64-linux",
+      "configuration": "Release",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "release"
+      }
+    },
+    {
+      "name": "x64-linux-RelWithDebInfo",
+      "displayName": "RelWithDebInfo",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment. (RelWithDebInfo)",
+      "configurePreset": "x64-linux",
+      "configuration": "RelWithDebInfo",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "release"
+      }
+    },
+    {
+      "name": "x64-linux-MinSizeRel",
+      "displayName": "MinSizeRel",
+      "description": "Target Windows (64-bit) with the Visual Studio development environment. (MinSizeRel)",
+      "configurePreset": "x64-linux",
+      "configuration": "MinSizeRel",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "release"
+      }
+    },
+    {
+      "name": "x86-linux-dbg",
+      "displayName": "Debug",
+      "description": "x86 Debug",
+      "configurePreset": "x86-linux",
+      "configuration": "Debug",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "debug"
+      }
+    },
+    {
+      "name": "x86-linux-rel",
+      "displayName": "Release",
+      "description": "x86 Release",
+      "configurePreset": "x86-linux",
+      "configuration": "Release",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "release"
+      }
+    },
+    {
+      "name": "x86-linux-RelWithDebInfo",
+      "displayName": "RelWithDebInfo",
+      "description": "x86 RelWithDebInfo",
+      "configurePreset": "x86-linux",
+      "configuration": "RelWithDebInfo",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+        "VCPKG_BUILD_TYPE": "release"
+      }
+    },
+    {
+      "name": "x86-linux-MinSizeRel",
+      "displayName": "MinSizeRel",
+      "description": "x86 MinSizeRel",
+      "configurePreset": "x86-linux",
+      "configuration": "MinSizeRel",
+      "inheritConfigureEnvironment": true,
+      "verbose": false,
+      "environment": {
+          "VCPKG_BUILD_TYPE": "release"
+      }
+    }
+  ],
+  "testPresets": [
+    {
+      "name": "x64 Test",
+      "displayName": "Test",
+      "description": "x64 Test",
+      "configurePreset": "x64-linux",
+      "configuration": "Debug",
+      "inheritConfigureEnvironment": true,
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    },
+    {
+      "name": "x86 Test",
+      "displayName": "Test",
+      "description": "x86 Test",
+      "configurePreset": "x86-linux",
+      "configuration": "Debug",
+      "inheritConfigureEnvironment": true,
+      "output": { "outputOnFailure": true },
+      "execution": {
+        "noTestsAction": "error",
+        "stopOnFailure": true
+      }
+    }
+  ]
+}
