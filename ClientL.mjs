@@ -44,3 +44,6 @@ server.on("request", (request, response) => {
 server.listen(port, hostname, () => {
   console.log(`Server listening at http://${hostname}:${port}/`);
 });
+
+var myModule = require("bindings")("addon");
+module.exports = myModule; // Just reexport it

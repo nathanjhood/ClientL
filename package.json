@@ -2,15 +2,25 @@
   "name": "clientl",
   "version": "1.0.0",
   "description": "Mini executable server",
-  "main": "ClientL.js",
+  "main": "ClientL.mjs",
   "repository": "git@github.com:StoneyDSP/ClientL.git",
   "author": "StoneyDSP <nathanjhood@googlemail.com>",
   "license": "MIT",
+  "type": "module",
   "scripts": {
-    "install": "cmake-js compile"
+    "dev": "node ClientL.mjs",
+    "configure": "cmake-js configure",
+    "reconfigure": "cmake-js reconfigure",
+    "build": "cmake-js build -DCMAKE_TOOLCHAIN_FILE=/usr/share/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "rebuild": "cmake-js rebuild -DCMAKE_TOOLCHAIN_FILE=/usr/share/vcpkg/scripts/buildsystems/vcpkg.cmake",
+    "compile": "cmake-js compile",
+    "clean": "cmake-js clean && rm -rvf ./build",
+    "wipe": "yarn clean && rm -rvf ./node_modules"
   },
   "devDependencies": {
-    "cmake-js": "^7.2.1"
+    "bindings": "^1.5.0",
+    "cmake-js": "^7.2.1",
+    "node-addon-api": "^6.0.0"
   },
   "cmake-js": {
     "runtime": "node",
