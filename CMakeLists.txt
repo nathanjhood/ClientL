@@ -1,3 +1,5 @@
+#!/usr/bin/env cmake
+
 # CMake requirements.
 cmake_minimum_required(VERSION 3.7...3.24.2)
 # Fallback for using newer policies on CMake <3.12.
