@@ -1,0 +1,19 @@
+{
+  "name": "clientl",
+  "version": "1.0.0",
+  "description": "Mini executable server",
+  "main": "ClientL.js",
+  "repository": "git@github.com:StoneyDSP/ClientL.git",
+  "author": "StoneyDSP <nathanjhood@googlemail.com>",
+  "license": "MIT",
+  "scripts": {
+    "install": "cmake-js compile"
+  },
+  "devDependencies": {
+    "cmake-js": "^7.2.1"
+  },
+  "cmake-js": {
+    "runtime": "node",
+    "arch": "x64"
+  }
+}
